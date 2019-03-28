@@ -4,7 +4,7 @@
 
 def shunt(infix):
 
-    specials = {'*': 50, '.': 40, '|': 30}
+    specials = {'*': 40, '+':30, '.': 20, '|': 10}
 
     pofix = ""
     stack = ""
@@ -28,4 +28,7 @@ def shunt(infix):
 
     return pofix
 
-print(shunt("(a.b)|(c*.d)"))
+print(shunt("(a*b)|(c|d)"))
+print(shunt("(a|b)+(a*|b*)"))
+print(shunt("(a|c*).(a|d)"))
+print(shunt("(a+c*).(a|d*)"))
