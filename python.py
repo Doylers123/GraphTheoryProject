@@ -10,6 +10,7 @@ def shunt(infix):
     stack = ""
 
     for c in infix:
+        # Adds the ( to the stack
         if c == '(':
             stack = stack + c
         elif c == ')':
