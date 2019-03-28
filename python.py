@@ -1,6 +1,6 @@
-#Cian Doyle
-# Graph Theory Project
-#G00335783
+#  Cian Doyle
+#   Graph Theory Project
+#   G00335783
 
 def shunt(infix):
 
