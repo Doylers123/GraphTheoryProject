@@ -10,7 +10,14 @@ To run the file you will need to type "python g00335783.py" in the command promp
 Upon doing so you should see a number of results printing to the screen which are the test cases being run that are in the python code.
 
 
-Shunting-Yard algorithm.
+Shunting-Yard algorithm:
+
 The shunting yard algoritm is a method for parsing Mathematical expressions in infix notation and converting it into a postfix notation.
 This algorithm uses stack to hold its operators where it will stack the operators based on its values.
 An infix notation is charaterized by the placement of operators between infixed operators such as ".", "*" and "|".
+
+
+Thompson's Construction:
+
+Thompson's construction algorithm is a method of transforming a regular expression into a NFA which can then be used
+to match strings against the regular expression.
