@@ -41,15 +41,15 @@ def shunt(infix):
 print(shunt("(a*b)|(c|d)"))
 print(shunt("(a|b)+(a*|b*)"))
 print(shunt("(a|c*).(a|d)"))
-print(shunt("(a+c*).(a|d*)"))
+
 
 
 # Represents a state with two arrows, labelled by label
 # Use None for a label representing "e" arrows
 class state:
     label = None
-    edge1 = None
-    edge2 = None
+    e_arrow1 = None
+    e_arrow2 = None
 
 # An NFA is represented by its initial and accept states
 class nfa:
@@ -65,44 +65,42 @@ def compile(pofix):
 
     for c in pofix:
         if c == '.':
-            # Pop two nfas off the stack
+            # Once the "."" operator is read, Pop two nfas off the stack
             nfa2 = nfastack.pop()
             nfa1 = nfastack.pop()
             # Connct first NFA's accept state to the second's initial.
-            nfa1.accept.edge1 = nfa2.initial
-            # Push NFA to the stack.
+            nfa1.accept.e_arrow1 = nfa2.initial
+            # Push NFA back onto the stack.
             newnfa = nfa(nfa1.initial, nfa2.accept) # using the constructor
-            nfastack.append(newnfa)
+            nfastack.append(newnfa) #new nfa created 
         elif c == '|':
-            #pop two nfas off the stack
+            # Once the "|" operator is read, pop two nfas off the stack
             nfa2 = nfastack.pop()
             nfa1 = nfastack.pop()
-            # Create a new initial state, connect it to initial states
-            # of the two NFA's popped from the stack.
+            # Create a new initial state, connect it to initial states of the two NFA's popped from the stack.
             initial = state()
-            initial.edge1 = nfa1.initial
-            initial.edge2 = nfa2.initial
-            #Create a new accept state, connecting the accept states
-            # of the two NFA's popped from the stack, to the new state.
+            initial.e_arrow1 = nfa1.initial
+            initial.e_arrow2 = nfa2.initial
+            #Create a new accept state, connecting the accept states of the two NFA's popped from the stack, to the new state.
             accept = state()
-            nfa1.accept.edge1 = accept
-            nfa2.accept.edge1 = accept
+            nfa1.accept.e_arrow1 = accept
+            nfa2.accept.e_arrow1 = accept
             #Push new NFA to the stack
             newnfa = nfa(initial, accept)
             nfastack.append(newnfa)
         elif c == '*':
-            #
+            # Pop nfa off the stack
             nfa1 = nfastack.pop()
-            #
+            # Create a new initial state and a new accept state
             initial = state()
             accept = state ()
-            #
-            initial.edge1 = nfa1.initial
-            initial.edge2 = accept
-            #
-            nfa1.accept.edge1 = nfa1.initial
-            nfa1.accept.edge2 = accept
-            #
+            # Joins your newly created initial state to your nfa1's initial state and your accept state
+            initial.e_arrow1 = nfa1.initial
+            initial.e_arrow2 = accept
+            # Joins your old accept state to the new accept state and to nfa1's initial state. 
+            nfa1.accept.e_arrow1 = nfa1.initial
+            nfa1.accept.e_arrow2 = accept
+            # Put your new nfa back onto the stack.
             newnfa = nfa(initial, accept)
             nfastack.append(newnfa)
         else:
@@ -111,7 +109,7 @@ def compile(pofix):
             initial = state()
             # Join the initial state to the accept state using an arrow labelled c.
             initial.label = c
-            initial.edge1 = accept
+            initial.e_arrow1 = accept
             # Push new NFA to the stack.
             newnfa = nfa(initial, accept)
             nfastack.append(newnfa)
@@ -121,6 +119,10 @@ def compile(pofix):
 
 print(compile("ab.cd.|"))
 print(compile("aa.*"))
+print(compile("ac.b*"))
+print(compile("ac.b|"))
+print(compile("ca|*"))
+
 
 def followes(state):
     """Return set of states that can be reached from state following e arrows."""
@@ -131,21 +133,21 @@ def followes(state):
    
     # Check if state has arrows labelled e from it.
     if state.label is None:
-        # Check if edge1 is a state
-        if state.edge1 is not None:
-            # If there's an edge1, follow it.
-            states |= followes(state.edge1)
+        # Check if e_arrow1 is a state
+        if state.e_arrow1 is not None:
+            # If there's an e_arrow1, follow it.
+            states |= followes(state.e_arrow1)
         # Check if state 2 is a state
-        if state.edge2 is not None:
-            # if there's an edge2, follow it.
-            states |= followes(state.edge2)
+        if state.e_arrow2 is not None:
+            # if there's an e_arrow2, follow it.
+            states |= followes(state.e_arrow2)
 
     return states
 
 def match(infix, string):
     """Matches string to infix regular expression"""
    
-    # Shunt and compile the regular expression
+    # Call The methods
     postfix = shunt(infix)
     nfa = compile(postfix)
 
@@ -162,8 +164,8 @@ def match(infix, string):
         for c in current:
             # Check if that state is labelled s.
             if c.label == s:
-                # Add the edge1 state to the next set.
-                next |= followes(c.edge1)
+                # Add the e_arrow1 state to the next set.
+                next |= followes(c.e_arrow1)
         #set current to next and clear out next
         current = next
         next = set()
@@ -174,8 +176,10 @@ def match(infix, string):
 
 # Tests
 
-infixes = ["a.b.c*", "a.(b|d).c*", "(a.(b|d))*", "a.(b.b)*.c"]
-strings = ["", "abc", "abbc", "abcc", "abad", "abbbc"]
+infixes = ["a.b.c*", "a.(b|d).c*", "(a.(b|d))*", "a.(b.b)*.c", "(a.b*)"]
+strings = ["", "abc", "abbc", "abcc", "abad", "abbbc", "abb"]
+
+
 
 for i in infixes:
     for s in strings:
