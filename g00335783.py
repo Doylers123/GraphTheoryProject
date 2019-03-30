@@ -20,21 +20,27 @@ def shunt(infix):
     stack = ""
 
     for c in infix:
+        # If c = '(' then add it to stack
         if c == '(':
             stack = stack + c
+            #if character is ')'
         elif c == ')':
-            while stack[-1] != '(':
-                pofix, stack = pofix + stack[-1], stack[:-1]
-            stack = stack[:-1]
+            while stack[-1] != '(': # stack [-1] is the last character so when '(' is the last character
+                pofix, stack = pofix + stack[-1], stack[:-1] # Pushes all operators other than '(' onto the postfix
+            stack = stack[:-1] # deletes from top of stack
         elif c in specials:
+            # Takes the operator with greater value off the top of stack and push into postfix
             while stack and specials.get(c, 0) <= specials.get(stack[-1], 0):
-                pofix, stack = pofix +stack[-1], stack[:-1]
+                # End of stack into pofix and get rid of it off stack
+                pofix, stack = pofix + stack[-1], stack[:-1]
+            # Put character on stack
             stack = stack + c
+        # If its not a special character or bracket, put in postfix
         else:
             pofix = pofix + c
 
     while stack:
-        pofix, stack = pofix + stack[-1], stack[:-1]
+        pofix, stack = pofix + stack[-1], stack[:-1] # End of stack into pofix and get rid of it off stack
 
     return pofix
 
@@ -45,7 +51,7 @@ print(shunt("(a|c*).(a|d)"))
 
 
 # Represents a state with two arrows, labelled by label
-# Use None for a label representing "e" arrows
+# Use None for a label representing "E" arrows
 class state:
     label = None
     e_arrow1 = None
