@@ -6,7 +6,7 @@ ________________________________________________________________________________
 
 In order to begin this python program, first you need to git clone this repository by typing " git clone https://github.com/Doylers123/GraphTheoryProject" in the command line.
 
-You will then need to run the python file named g00335783 by typing python g00335783.py" into the command line.Upon doing so you should see a number of results printing to the screen which are the test cases being run that are in the python code.
+You will then need to run the python file named g00335783 by typing "python g00335783.py" into the command line.Upon doing so you should see a number of results printing to the screen which are the test cases being run that are in the python code.
 
 The other files were just used as a practice for me to understand each problem individually.
 
