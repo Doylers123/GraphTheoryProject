@@ -46,13 +46,23 @@ References:
 ____________________________________________________________________________________________________________________
 
 https://en.wikipedia.org/wiki/Thompson%27s_construction
+
 http://www.cs.may.ie/staff/jpower/Courses/Previous/parsing/node5.html
+
 https://www.tutorialspoint.com/automata_theory/constructing_fa_from_re.htm
+
 https://en.wikipedia.org/wiki/Infix_notation
+
 https://en.wikipedia.org/wiki/Shunting-yard_algorithm
+
 http://www.oxfordmathcenter.com/drupal7/node/628
+
 https://web.microsoftstream.com/video/29de6c7c-9379-46d3-99e8-8a3dbafe391f
+
 https://web.microsoftstream.com/video/cfc9f4a2-d34f-4cde-afba-063797493a90
+
 https://web.microsoftstream.com/video/5e2a482a-b1c9-48a3-b183-19eb8362abc9
+
 https://web.microsoftstream.com/video/6b4ba6a4-01b7-4bde-8f85-b4b96abc902a
+
 https://swtch.com/~rsc/regexp/regexp1.html
