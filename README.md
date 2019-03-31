@@ -36,6 +36,6 @@ Character may appear a number of times as well as 0 number of times (0 or more).
 One nfa is popped of the stack, and then a new initial & accept state is created. The new initial state is joined to the nfa's old initial state. The old accept state is joined to the new accept state and to the nfa's initial state. New nfa is then pushed to the stack.
 
 ____________________________________________________________________________________________________________________
-Regular Expression Matching:
+Regular Expression Matching: 
 ____________________________________________________________________________________________________________________
 
