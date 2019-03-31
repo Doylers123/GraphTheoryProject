@@ -31,7 +31,7 @@ The two characters appear in order. The two nfa's will be popped off the stack, 
 Either character given will appear.
 Two nfa's are popped off stack, a new initial is created and then connected to the initial state of nfa1 & nfa2 and the same is done for the accept state. New nfa is them pushed to the stack.
 
-* (Kleene star):
+"*" (Kleene star):
 Character may appear a number of times as well as 0 number of times (0 or more).
 One nfa is popped of the stack, and then a new initial & accept state is created. The new initial state is joined to the nfa's old initial state. The old accept state is joined to the new accept state and to the nfa's initial state. New nfa is then pushed to the stack.
 
