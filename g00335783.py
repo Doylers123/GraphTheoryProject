@@ -14,7 +14,7 @@
 
 def shunt(infix):
 
-    specials = {'*': 50, '.': 40, '|': 30}
+    specials = {'*': 50, '+': 50, '.': 40, '|': 30}
 
     pofix = ""
     stack = ""
@@ -109,6 +109,20 @@ def compile(pofix):
             # Put your new nfa back onto the stack.
             newnfa = nfa(initial, accept)
             nfastack.append(newnfa)
+        elif c == '+':
+            # Pop NFA off the stack
+            nfa1 = nfastack.pop()
+            # Create a new initial state and a new accept state
+            initial = state()
+            accept = state ()
+            # Join new initial state to nfa1's intial
+            initial.e_arrow1  = nfa1.initial
+            # Join old accept to new accept and to nfa1s initial
+            nfa1.accept.e_arrow1 = nfa1.initial
+            nfa1.accept.e_arrow2 = accept
+            # Put your new nfa back onto the stack.
+            newnfa = nfa(initial, accept)
+            nfastack.append(newnfa)
         else:
             # Create new and initial and accept state
             accept = state()
@@ -188,5 +202,7 @@ strings = ["", "abc", "abbc", "abcc", "abad", "abbbc", "abb"]
 
 
 for i in infixes:
-    for s in strings:
-        print(match(i,s), i, s)
+   for s in strings:
+       print(match(i,s), i, s)
+
+
